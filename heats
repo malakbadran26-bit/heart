@@ -1,0 +1,50 @@
+import math as m
+from turtle import *
+def hearta(k):
+    return 15 * m.sin(k) ** 3
+def heartb(k):
+    return 12 * m.cos(k) - 5 * m.cos(2 * k) - 2 * m.cos(3 * k) - m.cos(4 * k)
+# Setup
+speed(0)
+bgcolor("black")
+color("green")
+pensize(1)
+
+# Draw heart outline and collect points
+heart_points = []
+penup()
+for i in range(620):
+    k = i * 0.01
+    x = hearta(k) * 10
+    y = heartb(k) * 15
+    heart_points.append((x, y))
+    goto(x, y)
+    pendown()
+
+# For each angle, find the farthest heart point in that direction
+for angle in range(0, 360, 2):
+    penup()
+    goto(0, 0)
+
+    target_angle = m.radians(angle)
+    best_point = None
+    best_dot = -float('inf')
+
+    # Find the point that's most aligned with this angle
+    for x, y in heart_points:
+        point_angle = m.atan2(y, x)
+        # Use dot product to find how aligned this point is with our target angle
+        dot_product = m.cos(target_angle) * m.cos(point_angle) + m.sin(target_angle) * m.sin(point_angle)
+
+        if dot_product > best_dot:
+            best_dot = dot_product
+            best_point = (x, y)
+
+    if best_point:
+        pendown()
+        goto(best_point[0], best_point[1])
+        penup()
+        goto(0, 0)
+
+hideturtle()
+done()
