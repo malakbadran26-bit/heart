@@ -1,0 +1,23 @@
+import time 
+import sys
+
+def print_lyrics():
+    lyrics = [
+        "maybe it is 6.45",
+        "maybe i am barely alive"
+    ]
+    
+    delays = [ 0.7,0.2]
+    
+    print ("girls like u")
+    time.sleep(1.2)
+
+    for i, line in enumerate(lyrics):
+        for char in line:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(0.06)
+        print()
+        time.sleep(delays[i])
+
+print_lyrics()
